@@ -2,6 +2,7 @@
 
 import graph_types
 import graph_run
+from graph_automaton import GraphAutomaton
 
 
 def run(automaton, graph):
@@ -23,7 +24,7 @@ graph0.add_edge('2r', '-', ())
 graph0.add_edge('3r', '-', ())
 graph0.add_edge('0', '-', ())
 
-automaton0 = graph_types.GraphAutomaton()
+automaton0 = GraphAutomaton()
 automaton0.add_transition('q1', 'npt', ('q2', 'q0', 'q3r'), set('x'), set(), set())
 automaton0.add_transition('q2', 'npt', ('q3', 'q1r', 'q3r'), set('y'), set(), set())
 automaton0.add_transition('q3', 'npt', ('q0', 'q2r', 'q0'), set('z'), set(), set())
@@ -43,7 +44,7 @@ graph1.add_edge('2r', '-', ())
 graph1.add_edge('3r', '-', ())
 graph1.add_edge('0', '-', ())
 
-automaton1 = graph_types.GraphAutomaton()
+automaton1 = GraphAutomaton()
 automaton1.add_transition('q1', 'npt', ('q2', 'q0', 'q3r'), set('x'), set(), set())
 automaton1.add_transition('q2', 'npt', ('q3', 'q1r', 'q3r'), set('y'), set(), set())
 automaton1.add_transition('q3', 'npt', ('q0', 'q2r', 'q0'), set('z'), set(), set())
@@ -72,7 +73,7 @@ graph2.add_edge('5r', '5', ())
 graph2.add_edge('6r', '6', ())
 graph2.add_edge('0', '0', ())
 
-automaton2 = graph_types.GraphAutomaton()
+automaton2 = GraphAutomaton()
 automaton2.add_transition('q1', 'npt', ('q2', 'q0', 'q0'), set('a'), set(), set())
 automaton2.add_transition('q2', 'npt', ('q3', 'q1r', 'q1r'), set('b'), set(), set())
 automaton2.add_transition('q3', 'npt', ('q4', 'q2r', 'q1r'), set('c'), set(), set())
@@ -104,7 +105,7 @@ graph3.add_edge('5r', '5', ())
 graph3.add_edge('6r', '6', ())
 graph3.add_edge('0', '0', ())
 
-automaton3 = graph_types.GraphAutomaton()
+automaton3 = GraphAutomaton()
 automaton3.add_transition('q1', 'npt', ('q2', 'q0', 'q0'), set('a'), set(), set())
 automaton3.add_transition('q1', 'npt', ('q2', 'q0', 'q0'), set('a'), set(), set(['q1-']))
 automaton3.add_transition('q2', 'npt', ('q3', 'q1r', 'q1r'), set('b'), set(), set())
@@ -124,7 +125,7 @@ automaton3.add_transition('q0', '0', (), set(), set(), set())
 
 run(automaton3, graph3)
 
-automaton4 = graph_types.GraphAutomaton()
+automaton4 = GraphAutomaton()
 automaton4.add_transition('q1', 'npt', ('q2', 'q0', 'q0'), set('a'), set(), set())
 automaton4.add_transition('q2', 'npt', ('q1', 'q1r', 'q1r'), set('b'), set(), set())
 automaton4.add_transition('q1', 'npt', ('q2', 'q2r', 'q1r'), set('a'), set(['a']), set())
@@ -141,7 +142,7 @@ automaton4.add_transition('q0', '0', (), set(), set(), set())
 
 run(automaton4, graph2)
 
-automaton5 = graph_types.GraphAutomaton()
+automaton5 = GraphAutomaton()
 automaton5.add_transition('q1', 'npt', ('q2', 'q0', 'q0'), set('a'), set(), set())
 automaton5.add_transition('q1', 'npt', ('q2', 'q0', 'q0'), set('a'), set(), set(['q1-']))
 automaton5.add_transition('q2', 'npt', ('q1', 'q1r', 'q1r'), set('b'), set(), set())

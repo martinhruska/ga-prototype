@@ -6,9 +6,6 @@ Basic definitions of data types for graph automata
 import collections
 
 Edge = collections.namedtuple('Edge', ['parent', 'symbol', 'children'])
-Trans = collections.namedtuple(
-    'Transition', ['parent', 'symbol', 'children', 'vars', 'forget', 'jumps'])
-Data = collections.namedtuple('Data', ['vars', 'forget', 'jumps'])
 Labelling = collections.namedtuple('Labelling', ['state', 'data'])
 
 
@@ -48,43 +45,6 @@ class Graph:
         res += "Edges: " + str(self._edges)
 
         return res
-
-
-class GraphAutomaton:
-    def __init__(self):
-        self._transitions = []
-
-    def __str__(self):
-        res = "States: " + str(set([trans.parent for trans in self._transitions]).union(
-            [c for trans in self._transitions for c in trans.children]))
-        res += "Symbols: " + str(set([s for (_, s, _) in self._transitions]))
-        res += "Transition: " + str(self._transitions)
-
-        return res
-
-    def __iter__(self):
-        return self._transitions.__iter__()
-
-    @property
-    def transitions(self):
-        return self._transitions
-
-    def add_create_transition(self, transition):
-        self._transitions.append(transition)
-
-    def add_transition(self, parent, symbol, children, variables, forget, jumps):
-        self._transitions.append(Trans(parent, symbol, children, variables, forget, jumps))
-
-    def applicable_transitions(self, edge, run):
-        return [trans for trans in self.transitions if
-                edge.symbol == trans.symbol and
-                len(edge.children) == len(trans.children) and
-                tuple((run.get_state(child) if child in run else False
-                       for child in edge.children)) == trans.children]
-
-    @staticmethod
-    def transition_to_run(transition):
-        return transition.parent, Data(transition[3], transition[4], transition[5])
 
 
 class Run:
