@@ -8,7 +8,8 @@ import collections
 Edge = collections.namedtuple('Edge', ['parent', 'symbol', 'children'])
 Trans = collections.namedtuple(
     'Transition', ['parent', 'symbol', 'children', 'vars', 'forget', 'jumps'])
-Labelling = collections.namedtuple('Labelling', ['state', 'vars', 'forget', 'jumps'])
+Data = collections.namedtuple('Data', ['vars', 'forget', 'jumps'])
+Labelling = collections.namedtuple('Labelling', ['state', 'data'])
 
 
 class Graph:
@@ -74,6 +75,17 @@ class GraphAutomaton:
     def add_transition(self, parent, symbol, children, variables, forget, jumps):
         self._transitions.append(Trans(parent, symbol, children, variables, forget, jumps))
 
+    def applicable_transitions(self, edge, run):
+        return [trans for trans in self.transitions if
+                edge.symbol == trans.symbol and
+                len(edge.children) == len(trans.children) and
+                tuple((run.get_state(child) if child in run else False
+                       for child in edge.children)) == trans.children]
+
+    @staticmethod
+    def transition_to_run(transition):
+        return transition.parent, Data(transition[3], transition[4], transition[5])
+
 
 class Run:
     def __init__(self):
@@ -98,11 +110,11 @@ class Run:
     def at(self, node):
         return self._mapping[node]
 
-    def map(self, node, state, variables, forgot, jump):
+    def map(self, node, state, data=[]):
         if node in self._mapping.keys():
             raise RuntimeError("This node has been already mapped")
 
-        self._mapping[node] = Labelling(state, variables, forgot, jump)
+        self._mapping[node] = Labelling(state, data)
 
     def get_state(self, node):
         if node not in self._mapping:
